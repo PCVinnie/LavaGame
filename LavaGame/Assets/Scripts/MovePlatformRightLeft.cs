@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovePlatform : MonoBehaviour {
+public class MovePlatformRightLeft : MonoBehaviour {
 
     private bool asPosition = true;
-    public float rightPosition = -11.7f;
-    public float leftPosition = -12.3f;
+    public float rightPosition = 0.0f;
+    public float leftPosition = 0.0f;
 
     // Update is called once per frame
     void Update () {
