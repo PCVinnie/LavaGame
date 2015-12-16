@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
     public float speed;
     public float jump;
+    public GameObject Spawnpoint;
 
     private bool grounded = true;
     private Rigidbody rb;
@@ -12,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        rb.position = Spawnpoint.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -37,11 +40,10 @@ public class PlayerController : MonoBehaviour {
         rb.AddForce(movement * speed);
 	}
 
-    void OnTriggerEnter(Collider other)
+    public void Respawn()
     {
-        if (other.gameObject.CompareTag("Ice Cube"))
-        {
-            other.gameObject.SetActive(false);
-        }
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.position = Spawnpoint.transform.position;
     }
 }
