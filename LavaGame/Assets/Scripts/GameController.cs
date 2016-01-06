@@ -58,6 +58,12 @@ public class GameController : MonoBehaviour {
         UpdateScore();
     }
 
+    public void addLife()
+    {
+        lives++;
+        UpdateLives();
+    }
+
     void UpdateScore()
     {
         scoreText.text = "Score: " + score;

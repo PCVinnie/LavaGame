@@ -23,10 +23,19 @@ public class DestroyByContact : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            //gameController.GameOver();
+            if (this.tag == "Ice Cube")
+            {
 
-            gameController.addScore(scoreValue);
-            Destroy(gameObject);
+                //gameController.GameOver();
+
+                gameController.addScore(scoreValue);
+                Destroy(gameObject);
+            }
+            else if(this.tag == "Life")
+            {
+                gameController.addLife();
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -10,11 +10,14 @@ public class PlayerController : MonoBehaviour {
 
     private bool grounded = true;
     private Rigidbody rb;
+
+    private Vector3 respawn;
     
     // Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
         rb.position = Spawnpoint.transform.position;
+        respawn = Spawnpoint.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -29,7 +32,7 @@ public class PlayerController : MonoBehaviour {
             grounded = true;
         }
 
-        if (Input.GetKeyDown("space") && grounded == true)
+        if (Input.GetKey("space") && grounded == true)
         {
             movement = new Vector3(moveHorizontal, jump, moveVertical);
             grounded = false;
@@ -44,6 +47,11 @@ public class PlayerController : MonoBehaviour {
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.position = Spawnpoint.transform.position;
+        rb.position = respawn;
+    }
+
+    public void NewCheckpoint(Vector3 position)
+    {
+        respawn = position;
     }
 }
