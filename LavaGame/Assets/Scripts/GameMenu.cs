@@ -12,35 +12,30 @@ public class GameMenu : MonoBehaviour {
     }
 
     void OnMouseEnter() {
-        //Change text color
+        // Change text color
         ren.material.color = Color.red;
     }
 
     void OnMouseExit() {
-        //Change text color
+        // Change text color
         ren.material.color = Color.white;
     }
 
     void OnMouseUp() {
-        //Mouse and touchscreen
+        // Mouse and touchscreen
         if (index == 0) {
-            //Quit the game
             Application.Quit();
         }
         if (index == 1) {
-            //Load level
             Application.LoadLevel(1);
         }
         if (index == 2) {
-            //Load level
             Application.LoadLevel(2);
         }
         if (index == 3) {
-            //Load level
             Application.LoadLevel(3);
         }
         if (index == 4) {
-            //Load level
             Application.LoadLevel(4);
         }
     }
@@ -50,21 +45,20 @@ public class GameMenu : MonoBehaviour {
         if (Input.GetKey(KeyCode.Escape)) {
             Application.Quit();
         }
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
+        if (Input.GetKey(KeyCode.Alpha1)) {
             Application.LoadLevel(1);
         }
-        if (Input.GetKey(KeyCode.Alpha2))
-        {
+        if (Input.GetKey(KeyCode.Alpha2)) {
             Application.LoadLevel(2);
         }
-        if (Input.GetKey(KeyCode.Alpha3))
-        {
+        if (Input.GetKey(KeyCode.Alpha3)) {
             Application.LoadLevel(3);
         }
-        if (Input.GetKey(KeyCode.Alpha4))
-        {
+        if (Input.GetKey(KeyCode.Alpha4)) {
             Application.LoadLevel(4);
+        }
+        if (Input.GetKey(KeyCode.Alpha0)) {
+            Application.LoadLevel(0);
         }
     }
 
