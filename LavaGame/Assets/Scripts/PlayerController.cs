@@ -24,23 +24,38 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () {
         Vector3 movement;
 
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        if(!grounded && rb.velocity.y == 0)
+        if (!grounded && rb.velocity.y == 0)
         {
             grounded = true;
         }
 
-        if (Input.GetKey("space") && grounded == true)
+        if (SystemInfo.deviceType == DeviceType.Desktop)
         {
-            movement = new Vector3(moveHorizontal, jump, moveVertical);
-            grounded = false;
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+
+            if (Input.GetKey("space") && grounded == true)
+            {
+                movement = new Vector3(moveHorizontal, jump, moveVertical);
+                grounded = false;
+            }
+            else
+                movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+            rb.AddForce(movement * speed);
         }
         else
-            movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        {
+            if(Input.GetMouseButton(0) && grounded == true)
+            {
+                movement = new Vector3(Input.acceleration.x, jump, Input.acceleration.y);
+                grounded = false;
+            }
+            else
+                movement = new Vector3(Input.acceleration.x, 0.0f, Input.acceleration.y);
 
-        rb.AddForce(movement * speed);
+            rb.AddForce(movement * speed);
+        }
 	}
 
     public void Respawn()
