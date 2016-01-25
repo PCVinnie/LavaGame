@@ -46,13 +46,18 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            if(Input.GetMouseButton(0) && grounded == true)
+            Input.gyro.enabled = true;
+            if (Input.GetMouseButton(0) && grounded == true)
             {
-                movement = new Vector3(Input.acceleration.x, jump, Input.acceleration.y);
+                movement = new Vector3(Input.gyro.rotationRateUnbiased.y, jump, -Input.gyro.rotationRateUnbiased.x );
+                //movement = new Vector3(Input.acceleration.x, jump, Input.acceleration.y);
                 grounded = false;
             }
             else
-                movement = new Vector3(Input.acceleration.x, 0.0f, Input.acceleration.y);
+            {
+                movement = new Vector3(Input.gyro.rotationRateUnbiased.y , 0.0f, -Input.gyro.rotationRateUnbiased.x );
+                //movement = new Vector3(Input.acceleration.x, 0.0f, Input.acceleration.y);
+            }
 
             rb.AddForce(movement * speed);
         }
