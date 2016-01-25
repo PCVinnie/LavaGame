@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool grounded = true;
     private Rigidbody rb;
+    private int cameraRotation = 0;
 
     private Vector3 respawn;
     
@@ -34,6 +35,26 @@ public class PlayerController : MonoBehaviour {
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
 
+            float remember;
+
+            switch (cameraRotation)
+            {
+                case 90:
+                    remember = moveHorizontal;
+                    moveHorizontal = -moveVertical;
+                    moveVertical = remember;
+                    break;
+                case 180:
+                    moveHorizontal *= -1;
+                    moveVertical *= -1;
+                    break;
+                case 270:
+                    remember = -moveHorizontal;
+                    moveHorizontal = moveVertical;
+                    moveVertical = remember;
+                    break;
+            }
+
             if (Input.GetKey("space") && grounded == true)
             {
                 movement = new Vector3(moveHorizontal, jump, moveVertical);
@@ -46,13 +67,18 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            if(Input.GetMouseButton(0) && grounded == true)
+            Input.gyro.enabled = true;
+            if (Input.GetMouseButton(0) && grounded == true)
             {
-                movement = new Vector3(Input.acceleration.x, jump, Input.acceleration.y);
+                movement = new Vector3(Input.gyro.rotationRateUnbiased.y, jump, -Input.gyro.rotationRateUnbiased.x );
+                //movement = new Vector3(Input.acceleration.x, jump, Input.acceleration.y);
                 grounded = false;
             }
             else
-                movement = new Vector3(Input.acceleration.x, 0.0f, Input.acceleration.y);
+            {
+                movement = new Vector3(Input.gyro.rotationRateUnbiased.y , 0.0f, -Input.gyro.rotationRateUnbiased.x );
+                //movement = new Vector3(Input.acceleration.x, 0.0f, Input.acceleration.y);
+            }
 
             rb.AddForce(movement * speed);
         }
@@ -68,5 +94,13 @@ public class PlayerController : MonoBehaviour {
     public void NewCheckpoint(Vector3 position)
     {
         respawn = position;
+    }
+
+    public void changeControlsForCamera(int cameraRotation)
+    {
+        this.cameraRotation += cameraRotation;
+
+        if (this.cameraRotation == 360)
+            this.cameraRotation = 0;
     }
 }
