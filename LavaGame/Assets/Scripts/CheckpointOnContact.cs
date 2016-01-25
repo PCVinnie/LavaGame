@@ -25,6 +25,9 @@ public class CheckpointOnContact : MonoBehaviour {
             Vector3 checkpoint = this.gameObject.transform.position;
             checkpoint.y += 1;
             playerController.NewCheckpoint(checkpoint);
+
+            Renderer r = GetComponent<Renderer>();
+            r.material.color = Color.green;
         }
     }
 }
