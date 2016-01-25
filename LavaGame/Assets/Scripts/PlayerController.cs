@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool grounded = true;
     private Rigidbody rb;
+    private int cameraRotation = 0;
 
     private Vector3 respawn;
     
@@ -33,6 +34,26 @@ public class PlayerController : MonoBehaviour {
         {
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
+
+            float remember;
+
+            switch (cameraRotation)
+            {
+                case 90:
+                    remember = moveHorizontal;
+                    moveHorizontal = -moveVertical;
+                    moveVertical = remember;
+                    break;
+                case 180:
+                    moveHorizontal *= -1;
+                    moveVertical *= -1;
+                    break;
+                case 270:
+                    remember = -moveHorizontal;
+                    moveHorizontal = moveVertical;
+                    moveVertical = remember;
+                    break;
+            }
 
             if (Input.GetKey("space") && grounded == true)
             {
@@ -73,5 +94,13 @@ public class PlayerController : MonoBehaviour {
     public void NewCheckpoint(Vector3 position)
     {
         respawn = position;
+    }
+
+    public void changeControlsForCamera(int cameraRotation)
+    {
+        this.cameraRotation += cameraRotation;
+
+        if (this.cameraRotation == 360)
+            this.cameraRotation = 0;
     }
 }
